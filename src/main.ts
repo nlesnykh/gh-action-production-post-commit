@@ -7,6 +7,9 @@ interface Commit {
 }
 
 Toolkit.run(async tools => {
+  // eslint-disable-next-line no-console
+  console.log('okay');
+
   const event = tools.context.payload;
 
   if (!event.commits) {
