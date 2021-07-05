@@ -7,18 +7,16 @@ interface Commit {
 }
 
 Toolkit.run(async tools => {
-  // eslint-disable-next-line no-console
-  console.log('okay');
+  core.info('Starting action');
 
   const event = tools.context.payload;
 
   if (!event.commits) {
-    core.debug("Couldn't find any commits in this event, incrementing patch version...");
+    core.info("Couldn't find any commits in this event, incrementing patch version...");
   }
 
   const messages = event.commits ? event.commits.map((commit: Commit) => `${commit.message}\n${commit.body}`) : [];
-  core.debug(messages);
+  core.info(messages);
 
-  core.setOutput('okay', new Date().toTimeString());
-  core.setFailed('failed');
+  core.setOutput('Action completed', new Date().toTimeString());
 });
