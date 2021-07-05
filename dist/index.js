@@ -46,6 +46,8 @@ actions_toolkit_1.Toolkit.run((tools) => __awaiter(void 0, void 0, void 0, funct
     }
     const messages = event.commits ? event.commits.map((commit) => `${commit.message}\n${commit.body}`) : [];
     core.info(messages);
+    // eslint-disable-next-line no-console
+    console.log('Commits:', event.commits);
     core.setOutput('Action completed', new Date().toTimeString());
 }));
 
