@@ -1,22 +1,20 @@
 import * as core from '@actions/core';
-import { wait } from './wait';
+import { Toolkit } from 'actions-toolkit';
 
-async function run(): Promise<void> {
-  try {
-    const ms: string = core.getInput('milliseconds');
-    core.debug(`Waiting ${ms} milliseconds ...`);
-
-    const token: string = core.getInput('token');
-    core.debug(`Token ${token}`);
-
-    core.debug(new Date().toTimeString());
-    await wait(parseInt(ms, 10));
-    core.debug(new Date().toTimeString());
-
-    core.setOutput('time', new Date().toTimeString());
-  } catch (error) {
-    core.setFailed(error.message);
-  }
+interface Commit {
+  message: string;
+  body: string;
 }
 
-run();
+Toolkit.run(async tools => {
+  const event = tools.context.payload;
+
+  if (!event.commits) {
+    core.debug("Couldn't find any commits in this event, incrementing patch version...");
+  }
+
+  const messages = event.commits ? event.commits.map((commit: Commit) => `${commit.message}\n${commit.body}`) : [];
+  core.debug(messages);
+
+  core.setOutput('okay', new Date().toTimeString());
+});
