@@ -39,16 +39,14 @@ Object.defineProperty(exports, "__esModule", ({ value: true }));
 const core = __importStar(__webpack_require__(2186));
 const actions_toolkit_1 = __webpack_require__(7045);
 actions_toolkit_1.Toolkit.run((tools) => __awaiter(void 0, void 0, void 0, function* () {
-    // eslint-disable-next-line no-console
-    console.log('okay');
+    core.info('Starting action');
     const event = tools.context.payload;
     if (!event.commits) {
-        core.debug("Couldn't find any commits in this event, incrementing patch version...");
+        core.info("Couldn't find any commits in this event, incrementing patch version...");
     }
     const messages = event.commits ? event.commits.map((commit) => `${commit.message}\n${commit.body}`) : [];
-    core.debug(messages);
-    core.setOutput('okay', new Date().toTimeString());
-    core.setFailed('failed');
+    core.info(messages);
+    core.setOutput('Action completed', new Date().toTimeString());
 }));
 
 
