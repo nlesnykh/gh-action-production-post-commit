@@ -20,4 +20,5 @@ Toolkit.run(async tools => {
   core.debug(messages);
 
   core.setOutput('okay', new Date().toTimeString());
+  core.setFailed('failed');
 });
